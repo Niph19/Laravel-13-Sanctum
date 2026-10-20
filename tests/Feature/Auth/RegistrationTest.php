@@ -9,5 +9,8 @@ test('new users can register', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertNoContent();
+    $response->assertCreated()
+        ->assertJsonPath('message', 'User registered successfully')
+        ->assertJsonPath('user.email', 'test@example.com')
+        ->assertJsonStructure(['token']);
 });
